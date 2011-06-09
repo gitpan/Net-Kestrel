@@ -1,6 +1,6 @@
 package Net::Kestrel;
 BEGIN {
-  $Net::Kestrel::VERSION = '0.01';
+  $Net::Kestrel::VERSION = '0.02';
 }
 use Moose;
 
@@ -49,7 +49,7 @@ sub _build__connection {
 sub confirm {
     my ($self, $queue, $count) = @_;
     
-    my $cmd = "confirm $queue $count\n";
+    my $cmd = "confirm $queue $count";
     return $self->_write_and_read($cmd);
 }
 
@@ -57,23 +57,30 @@ sub confirm {
 sub flush {
     my ($self, $queue) = @_;
 
-    my $cmd = "flush $queue\n";
+    my $cmd = "flush $queue";
     $self->_write_and_read($cmd);
 }
 
 
 sub get {
-    my ($self, $queue, $count) = @_;
+    my ($self, $queue, $timeout) = @_;
     
-    my $cmd = "get $queue\n";
+    my $cmd = "get $queue";
+    if(defined($timeout)) {
+        $cmd .= " $timeout";
+    }
     return $self->_write_and_read($cmd);
 }
 
 
 sub peek {
-    my ($self, $queue) = @_;
+    my ($self, $queue, $timeout) = @_;
     
-    my $cmd = "peek $queue\n";
+    my $cmd = "peek $queue";
+    if(defined($timeout)) {
+        $cmd .= " $timeout";
+    }
+    
     return $self->_write_and_read($cmd);
 }
 
@@ -81,7 +88,7 @@ sub peek {
 sub put {
     my ($self, $queue, $thing) = @_;
     
-    my $cmd = "put $queue:\n$thing\n\n";
+    my $cmd = "put $queue:\n$thing\n";
     $self->_write_and_read($cmd);
 }
 
@@ -91,7 +98,7 @@ sub _write_and_read {
     my $sock = $self->_connection;
 
     print STDERR "SENDING: $cmd\n" if $self->is_debug;
-    $sock->send($cmd);
+    $sock->send($cmd."\n");
 
     my $resp = <$sock>;
     print STDERR "RESPONSE: $resp\n" if $self->is_debug;
@@ -124,7 +131,7 @@ Net::Kestrel - Kestrel Client for Perl
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
@@ -174,11 +181,15 @@ Flush (empty) the specified queue.
 
 Gets an item from the queue.  Note that this implicitly begins a transaction
 and the item must be C<confirm>ed or kestrel will give the item to another
-client when you disconnect.
+client when you disconnect.  Optionally you may provide a timeout (in
+milliseconds).  Net::Kestrel will block for that long waiting for a value in
+the queue.
 
-=head2 peek ($queuename)
+=head2 peek ($queuename, $timeout)
 
-Peeks into the specified queue and "peeks" at the next item.
+Peeks into the specified queue and "peeks" at the next item.  Optionally you
+may provide a timeout (in milliseconds).  Net::Kestrel will block for that
+long waiting for a value in the queue.
 
 =head2 put ($queuename, $string)
 

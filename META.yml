@@ -21,4 +21,4 @@ requires:
   Moose: 0
 resources:
   repository: https://github.com/gphat/net-kestreol
-version: 0.01
+version: 0.02

@@ -11,11 +11,14 @@ my $kes = Net::Kestrel->new(host => $host);
 my $queue = 'test-net-kestrel';
 
 $| = 1;
-for(my $x = 0; $x <= 10000; $x += 1) {
-    $kes->put($queue, "hello, java $x");
-    print ".";
+while(1) {
+    my $val = $kes->get($queue);
+    print "Got: $val\n";
+    if(!defined($val)) {
+        exit;
+    }
+    $kes->confirm($queue, 1);
 }
-print "\n";
 
 ## Flush the queue so our test starts from a known point
 # my $ass = $kes->get($queue);

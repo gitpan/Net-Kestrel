@@ -6,8 +6,6 @@ META.yml
 Makefile.PL
 README
 README.mkdn
-ass.pl
-get.pl
 lib/Net/Kestrel.pm
 t/release-pod-syntax.t
 t/release-synopsis.t

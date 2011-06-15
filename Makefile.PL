@@ -24,11 +24,9 @@ my %WriteMakefileArgs = (
   'NAME' => 'Net::Kestrel',
   'PREREQ_PM' => {
     'IO::Socket' => '0',
-    'JSON::Any' => '0',
-    'JSON::XS' => '0',
     'Moose' => '0'
   },
-  'VERSION' => '0.02',
+  'VERSION' => '0.03',
   'test' => {
     'TESTS' => 't/*.t'
   }

@@ -1,6 +1,6 @@
 package Net::Kestrel;
 BEGIN {
-  $Net::Kestrel::VERSION = '0.03';
+  $Net::Kestrel::VERSION = '0.04';
 }
 use Moose;
 
@@ -155,7 +155,7 @@ Net::Kestrel - Kestrel Client for Perl
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 

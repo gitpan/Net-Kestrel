@@ -18,5 +18,5 @@ requires:
   IO::Socket: 0
   Moose: 0
 resources:
-  repository: https://github.com/gphat/net-kestreol
-version: 0.03
+  repository: https://github.com/gphat/net-kestrel
+version: 0.04

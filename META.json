@@ -36,9 +36,9 @@
    "resources" : {
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/gphat/net-kestreol"
+         "url" : "https://github.com/gphat/net-kestrel"
       }
    },
-   "version" : "0.03"
+   "version" : "0.04"
 }
 

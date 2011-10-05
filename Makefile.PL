@@ -9,26 +9,27 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'Kestrel Client for Perl',
-  'AUTHOR' => 'Cory G Watson <gphat@cpan.org>',
-  'BUILD_REQUIRES' => {
-    'Test::Exception' => '0',
-    'Test::More' => '0'
+  "ABSTRACT" => "Kestrel Client for Perl",
+  "AUTHOR" => "Cory G Watson <gphat\@cpan.org>",
+  "BUILD_REQUIRES" => {
+    "Test::Exception" => 0,
+    "Test::More" => 0,
+    "strict" => 0
   },
-  'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.30'
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
   },
-  'DISTNAME' => 'Net-Kestrel',
-  'EXE_FILES' => [],
-  'LICENSE' => 'perl',
-  'NAME' => 'Net::Kestrel',
-  'PREREQ_PM' => {
-    'IO::Socket' => '0',
-    'Moose' => '0'
+  "DISTNAME" => "Net-Kestrel",
+  "EXE_FILES" => [],
+  "LICENSE" => "perl",
+  "NAME" => "Net::Kestrel",
+  "PREREQ_PM" => {
+    "IO::Socket" => 0,
+    "Moose" => 0
   },
-  'VERSION' => '0.04',
-  'test' => {
-    'TESTS' => 't/*.t'
+  "VERSION" => "0.05",
+  "test" => {
+    "TESTS" => "t/*.t"
   }
 );
 

@@ -1,6 +1,6 @@
 package Net::Kestrel;
-BEGIN {
-  $Net::Kestrel::VERSION = '0.04';
+{
+  $Net::Kestrel::VERSION = '0.05';
 }
 use Moose;
 
@@ -45,7 +45,7 @@ has _connection => (
 sub _build__connection {
     my ($self) = @_;
 
-    $SIG{PIPE} = sub { die 'Connection to '.$self->host.' port '.$self->port.' went away!' };
+    $SIG{PIPE} = sub { die 'Connection to '.$self->host.' port '.$self->port.' went away! Server down?' };
 
     my $sock = IO::Socket::INET->new(
         PeerAddr => $self->host,
@@ -64,7 +64,7 @@ sub _build__connection {
 
 sub confirm {
     my ($self, $queue, $count) = @_;
-    
+
     my $cmd = "confirm $queue $count";
     return $self->_write_and_read($cmd);
 }
@@ -88,7 +88,7 @@ sub flush {
 
 sub get {
     my ($self, $queue, $timeout) = @_;
-    
+
     my $cmd = "get $queue";
     if(defined($timeout)) {
         $cmd .= " $timeout";
@@ -99,20 +99,28 @@ sub get {
 
 sub peek {
     my ($self, $queue, $timeout) = @_;
-    
+
     my $cmd = "peek $queue";
     if(defined($timeout)) {
         $cmd .= " $timeout";
     }
-    
+
     return $self->_write_and_read($cmd);
 }
 
 
 sub put {
     my ($self, $queue, $thing) = @_;
-    
+
     my $cmd = "put $queue:\n$thing\n";
+    $self->_write_and_read($cmd);
+}
+
+
+sub stats {
+    my ($self) = @_;
+
+    my $cmd = "stats";
     $self->_write_and_read($cmd);
 }
 
@@ -124,7 +132,19 @@ sub _write_and_read {
     print STDERR "SENDING: $cmd\n" if $self->is_debug;
     $sock->send($cmd."\n");
 
-    my $resp = <$sock>;
+    my $resp = undef;
+    while(my $line = <$sock>) {
+        $resp .= $line;
+        # There isn't ONE way to know that kestrel is done talking to us. So
+        # we'll use the same logic we use below to detect the type of information
+        # we got back.  Not optimal, but I don't purport to be very good at
+        # socket programming.
+        last if $line =~ /^\+(\d+)\n$/;
+        last if $line =~ /END\n$/;
+        last if $line =~ /^-(.*)\n$/;
+        last if $line =~ /^\*\n$/;
+        last if $line =~ /^:.*\n$/;
+    }
     print STDERR "RESPONSE: $resp\n" if $self->is_debug;
 
     if($resp =~ /^:(.*)\n$/) {
@@ -155,14 +175,16 @@ Net::Kestrel - Kestrel Client for Perl
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 
     use Net::Kestrel;
 
+    my $queuename = 'myqueue';
+
     my $kes = Net::Kestrel->new; # defaults to host => 127.0.0.1, port => 2222
-    $kes->put($queuename, $value);
+    $kes->put($queuename, 'foobar');
     # ... later
 
     # take a peek, doesn't remove the item
@@ -171,7 +193,7 @@ version 0.04
     # get the item out, beginning a transaction
     my $real_item = $kes->get($queuename);
     # ... do something with it
-    
+
     # then confirm we finished it so kestrel can discard it
     $kes->confirm($queuename, 1); # since we got one item
 
@@ -227,6 +249,10 @@ long waiting for a value in the queue.
 =head2 put ($queuename, $string)
 
 Puts the provided payload into the specified queue.
+
+=head2 stats
+
+Returns stats from the kestrel instance
 
 =head1 NOTES
 

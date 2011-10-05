@@ -5,10 +5,11 @@ author:
 build_requires:
   Test::Exception: 0
   Test::More: 0
+  strict: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.200007, CPAN::Meta::Converter version 2.110440'
+generated_by: 'Dist::Zilla version 4.300001, CPAN::Meta::Converter version 2.112150'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -18,5 +19,6 @@ requires:
   IO::Socket: 0
   Moose: 0
 resources:
-  repository: https://github.com/gphat/net-kestrel
-version: 0.04
+  homepage: https://github.com/gphat/net-kestrel
+  repository: https://github.com/gphat/net-kestrel.git
+version: 0.05

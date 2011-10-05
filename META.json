@@ -4,7 +4,7 @@
       "Cory G Watson <gphat@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.200007, CPAN::Meta::Converter version 2.110440",
+   "generated_by" : "Dist::Zilla version 4.300001, CPAN::Meta::Converter version 2.112150",
    "license" : [
       "perl_5"
    ],
@@ -28,17 +28,20 @@
       "test" : {
          "requires" : {
             "Test::Exception" : 0,
-            "Test::More" : 0
+            "Test::More" : 0,
+            "strict" : 0
          }
       }
    },
    "release_status" : "stable",
    "resources" : {
+      "homepage" : "https://github.com/gphat/net-kestrel",
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/gphat/net-kestrel"
+         "url" : "https://github.com/gphat/net-kestrel.git",
+         "web" : "https://github.com/gphat/net-kestrel"
       }
    },
-   "version" : "0.04"
+   "version" : "0.05"
 }
 

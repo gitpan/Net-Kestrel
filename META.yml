@@ -21,4 +21,4 @@ requires:
 resources:
   homepage: https://github.com/gphat/net-kestrel
   repository: https://github.com/gphat/net-kestrel.git
-version: 0.06
+version: 0.07

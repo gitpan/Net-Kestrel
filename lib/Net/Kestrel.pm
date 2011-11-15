@@ -1,6 +1,6 @@
 package Net::Kestrel;
 {
-  $Net::Kestrel::VERSION = '0.06';
+  $Net::Kestrel::VERSION = '0.07';
 }
 use Moose;
 
@@ -175,7 +175,7 @@ Net::Kestrel - Kestrel Client for Perl
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 
@@ -225,14 +225,13 @@ Confirms $count items from the queue.
 
 =head2 delete ($queuename)
 
-Delete the specified queue.  B<NOTE: This is not yet supported in Kestrel's
-text protocol.>
+Delete the specified queue.
 
 =head2 flush ($queuename)
 
 Flush (empty) the specified queue.
 
-=head2 get ($queuename)
+=head2 get ($queuename, $timeout_in_millis)
 
 Gets an item from the queue.  Note that this implicitly begins a transaction
 and the item must be C<confirm>ed or kestrel will give the item to another
@@ -240,7 +239,7 @@ client when you disconnect.  Optionally you may provide a timeout (in
 milliseconds).  Net::Kestrel will block for that long waiting for a value in
 the queue.
 
-=head2 peek ($queuename, $timeout)
+=head2 peek ($queuename, $timeout_in_millis)
 
 Peeks into the specified queue and "peeks" at the next item.  Optionally you
 may provide a timeout (in milliseconds).  Net::Kestrel will block for that

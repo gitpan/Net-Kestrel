@@ -1,6 +1,6 @@
 package Net::Kestrel;
 {
-  $Net::Kestrel::VERSION = '0.05';
+  $Net::Kestrel::VERSION = '0.06';
 }
 use Moose;
 
@@ -175,7 +175,7 @@ Net::Kestrel - Kestrel Client for Perl
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
@@ -211,7 +211,7 @@ The ip address of the Kestrel host you want to connect to.
 
 =head2 port
 
-The port to connect to.  Defaults to 22133.
+The port to connect to.  Defaults to 2222.
 
 =head2 timeout
 

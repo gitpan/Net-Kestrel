@@ -27,7 +27,7 @@ my %WriteMakefileArgs = (
     "IO::Socket" => 0,
     "Moose" => 0
   },
-  "VERSION" => "0.07",
+  "VERSION" => "0.08",
   "test" => {
     "TESTS" => "t/*.t"
   }

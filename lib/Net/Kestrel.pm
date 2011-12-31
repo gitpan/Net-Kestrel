@@ -1,6 +1,6 @@
 package Net::Kestrel;
 {
-  $Net::Kestrel::VERSION = '0.07';
+  $Net::Kestrel::VERSION = '0.08';
 }
 use Moose;
 
@@ -19,7 +19,7 @@ has 'debug' => (
 has 'host' => (
     is => 'ro',
     isa => 'Str',
-    required => 1
+    default => '127.0.0.1'
 );
 
 
@@ -175,7 +175,7 @@ Net::Kestrel - Kestrel Client for Perl
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 
